@@ -1,20 +1,25 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+let timerId = null;
 const btnStart = document.querySelector('[data-start]')
 btnStart.setAttribute("disabled", '');
 btnStart.addEventListener('click', timeData)
 function timeData() {
-   
        timerId = setInterval(() => {
    const input = document.querySelector('#datetime-picker').value
     const timer = convertMs(new Date(input) - new Date())
-    document.querySelector('[data-days]').textContent = timer.days
-    document.querySelector('[data-hours]').textContent = timer.hours
-    document.querySelector('[data-minutes]').textContent = timer.minutes
-    document.querySelector('[data-seconds]').textContent = timer.seconds
-   }, 1000);
+    document.querySelector('[data-days]').textContent = addLeadingZero(timer.days)
+    document.querySelector('[data-hours]').textContent = addLeadingZero(timer.hours)
+    document.querySelector('[data-minutes]').textContent =addLeadingZero (timer.minutes)
+    document.querySelector('[data-seconds]').textContent =addLeadingZero (timer.seconds)
+       }, 1000);
+}
+function addLeadingZero(value) {
+   return String(value).padStart(2, '0')
+    
 }
 
+console.log(addLeadingZero('2'))
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -51,5 +56,3 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-
-// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
