@@ -1,5 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import { Notify } from "notiflix";
 let timerId = null;
 const btnStart = document.querySelector('[data-start]')
 btnStart.setAttribute("disabled", '');
@@ -7,7 +8,11 @@ btnStart.addEventListener('click', timeData)
 function timeData() {
        timerId = setInterval(() => {
    const input = document.querySelector('#datetime-picker').value
-    const timer = convertMs(new Date(input) - new Date())
+         const timer = convertMs(new Date(input) - new Date())
+         if (timer.seconds < 0) {
+           clearInterval(timerId)
+           return
+         }
     document.querySelector('[data-days]').textContent = addLeadingZero(timer.days)
     document.querySelector('[data-hours]').textContent = addLeadingZero(timer.hours)
     document.querySelector('[data-minutes]').textContent =addLeadingZero (timer.minutes)
@@ -27,7 +32,7 @@ const options = {
   minuteIncrement: 1,
     onClose(selectedDates) {
         if (new Date() > selectedDates[0]) {
-          window.alert("Please choose a date in the future")
+         return Notify.failure("Please choose a date in the future")
         }
         else {
 btnStart.removeAttribute("disabled")

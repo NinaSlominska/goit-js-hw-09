@@ -16,3 +16,14 @@ img {
   display: block;
   max-width: 100%;
 }
+.value{
+font-size: 22px;
+display: flex;
+align-items: center; 
+justify-content: center;
+}
+.timer{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
